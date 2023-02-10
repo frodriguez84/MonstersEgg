@@ -10,6 +10,7 @@ window.addEventListener('load', function () {
     ctx.font = '40px Bangers';
     ctx.textAlign = 'center';
 
+    // PLAYER
     class Player {
         constructor(game) {
             this.game = game;
@@ -31,15 +32,15 @@ window.addEventListener('load', function () {
             this.frameY = 0;
             this.image = document.getElementById('bull');
         }
-
+    
         restart() {
             this.collisionX = this.game.width * 0.5;
             this.collisionY = this.game.height * 0.5;
             this.spriteX = this.collisionX - this.width * 0.5;
             this.spriteY = this.collisionY - this.height * 0.5 - 100;
-
+    
         }
-
+    
         draw(context) {
             context.drawImage(this.image,
                 this.frameX * this.spriteWidth,
@@ -64,7 +65,7 @@ window.addEventListener('load', function () {
                 context.stroke();
             }
         }
-
+    
         update() {
             this.dx = this.game.mouse.x - this.collisionX;
             this.dy = this.game.mouse.y - this.collisionY;
@@ -78,7 +79,7 @@ window.addEventListener('load', function () {
             else if (angle < 1.17) this.frameY = 3;
             else if (angle < 1.96) this.frameY = 4;
             else if (angle < 2.74) this.frameY = 5;
-
+    
             const distance = Math.hypot(this.dy, this.dx);
             if (distance > this.speedModifier) {
                 this.speedX = this.dx / distance || 0;
@@ -112,12 +113,12 @@ window.addEventListener('load', function () {
                     const unit_y = dy / distance;
                     this.collisionX = obstacle.collisionX + (sumOfRadii + 1) * unit_x;
                     this.collisionY = obstacle.collisionY + (sumOfRadii + 1) * unit_y;
-
+    
                 }
             })
         }
     }
-
+    // OBSTACLE
     class Obstacle {
         constructor(game) {
             this.game = game;
@@ -133,7 +134,7 @@ window.addEventListener('load', function () {
             this.spriteY = this.collisionY - this.height * 0.5 - 70;
             this.frameX = Math.floor(Math.random() * 4);
             this.frameY = Math.floor(Math.random() * 3);
-
+    
         }
         draw(context) {
             context.drawImage(this.image,
@@ -156,10 +157,10 @@ window.addEventListener('load', function () {
             }
         }
         update() {
-
+    
         }
     }
-
+    // EGG
     class Egg {
         constructor(game) {
             this.game = game;
@@ -212,7 +213,7 @@ window.addEventListener('load', function () {
                 this.game.hatchlings.push(new Larva(this.game, this.collisionX, this.collisionY))
                 this.markedForDeletion = true;
                 this.game.removeGameObjects();
-
+    
             } else {
                 this.hatchTimer += deltaTime;
             }
